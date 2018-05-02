@@ -5,5 +5,8 @@
         android:icon="@mipmap/ic_launcher_round"
         android:title="@string/Add_New" >
     </item>
-
+    <item android:id="@+id/HttpRequest"
+        android:icon="@mipmap/ic_launcher_round"
+        android:title="@string/Get_Http" >
+    </item>
 </menu>

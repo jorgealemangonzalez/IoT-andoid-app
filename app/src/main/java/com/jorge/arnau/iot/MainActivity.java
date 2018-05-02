@@ -1,9 +1,9 @@
 package com.jorge.arnau.iot;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +15,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "MESSAGE";
@@ -70,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(intent);
                 return true;
+            case R.id.HttpRequest:
+                Log.i("Options: ", "Click on httpRequest");
+                FetchHttpRequest req = new FetchHttpRequest();
+                req.execute(req.adress);
             default:
                 return super.onOptionsItemSelected(item);
         }
