@@ -11,13 +11,19 @@ import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.ContentHandlerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class FetchHttpRequest extends AsyncTask<String, Integer, Long> {
-    public String adress = "https://jsonplaceholder.typicode.com/users";
+    public String adress = "https://www.w3schools.com/xml/note.xml";
 
 
     protected Long doInBackground(String... urls) {
@@ -26,12 +32,10 @@ public class FetchHttpRequest extends AsyncTask<String, Integer, Long> {
         for (int i = 0; i < count; i++) {
             try {
                 URL url = new URL(urls[0]);
-                InputStreamReader reader = new InputStreamReader((InputStream) url.getContent());
-                JsonElement elem = new JsonParser().parse(reader);
-                Log.i("JSON: ", elem.getAsJsonArray().toString());
-
-                JsonArray json = elem.getAsJsonArray();
-                Log.i("JSON: ", json.get(0).toString());
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                factory.setNamespaceAware(true);
+                Document doc = factory.newDocumentBuilder().parse(url.openStream());
+                Log.i("JSON: ", doc.getElementsByTagName("from").item(0).getTextContent());
                 Log.i("FetchHttpRequest", "HOLA HTTP");
             } catch (Exception e) {
                 e.printStackTrace();
