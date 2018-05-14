@@ -81,15 +81,13 @@
             android:text="@string/street"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <EditText
+        <Spinner
             android:id="@+id/editTextCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/editTextName"
             android:layout_below="@+id/editTextEmail"
-            android:layout_marginTop="30dp"
-            android:ems="10"
-            android:inputType="text" />
+            android:layout_marginTop="30dp" />
 
         <TextView
             android:id="@+id/textView3"

@@ -28,18 +28,38 @@ class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Auto-generated method stub
+        db.execSQL(
+                "create table cities " +
+                        "(id integer primary key AUTOINCREMENT, name text)"
+        );
+        db.execSQL("INSERT INTO cities (name) values ('Barcelona')");
+        db.execSQL("INSERT INTO cities (name) values ('Madrid')");
+        db.execSQL("INSERT INTO cities (name) values ('Murcia')");
+        db.execSQL("INSERT INTO cities (name) values ('Galícia')");
         db.execSQL(
                 "create table contacts " +
-                        "(id integer primary key, name text,phone text,email text, street text,place text)"
+                        "(id integer primary key, name text,phone text,email text, street text,place integer, FOREIGN KEY(place) REFERENCES cities(id))"
         );
+    }
+
+    public void resetDB(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS contacts");
+        db.execSQL("DROP TABLE IF EXISTS cities");
+        this.onCreate(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS contacts");
+        db.execSQL("DROP TABLE IF EXISTS cities");
         onCreate(db);
+    }
+
+    Integer getCityIdByName(SQLiteDatabase db, String name){
+        Cursor res = db.rawQuery("SELECT id FROM cities WHERE name ="+name, null);
+        return res.getInt(res.getColumnIndex(CONTACTS_COLUMN_ID));
     }
 
     public boolean insertContact (String name, String phone, String email, String street,String place) {
@@ -49,7 +69,7 @@ class DBHelper extends SQLiteOpenHelper {
         contentValues.put("phone", phone);
         contentValues.put("email", email);
         contentValues.put("street", street);
-        contentValues.put("place", place);
+        contentValues.put("place", getCityIdByName(db,place));
         db.insert("contacts", null, contentValues);
         return true;
     }
@@ -58,6 +78,21 @@ class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from contacts where id="+id+"", null );
         return res;
+    }
+
+    public ArrayList<String> getCititesData() {
+        ArrayList<String> array_list = new ArrayList<String>();
+
+        //hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from cities", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            array_list.add(res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME)));
+            res.moveToNext();
+        }
+        return array_list;
     }
 
     public int numberOfRows(){
@@ -73,7 +108,7 @@ class DBHelper extends SQLiteOpenHelper {
         contentValues.put("phone", phone);
         contentValues.put("email", email);
         contentValues.put("street", street);
-        contentValues.put("place", place);
+        contentValues.put("place", getCityIdByName(db,place));
         db.update("contacts", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
         return true;
     }

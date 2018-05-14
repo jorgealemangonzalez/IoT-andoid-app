@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         mydb = new DBHelper(this);
         ArrayList array_list = mydb.getAllCotacts();
+        ArrayList cities = mydb.getCititesData();
+        Log.i("CITIES:", "all cities--" +cities);
         ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1, array_list);
 
         obj = (ListView)findViewById(R.id.listView1);

@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class DisplayContact extends AppCompatActivity {
 
@@ -22,8 +27,15 @@ public class DisplayContact extends AppCompatActivity {
     TextView phone;
     TextView email;
     TextView street;
-    TextView place;
+    Spinner place;
     int id_To_Update = 0;
+
+    private void loadSpinnerData(){
+        ArrayList<String> cities = mydb.getCititesData();
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, cities);
+
+        place.setAdapter(dataAdapter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +45,10 @@ public class DisplayContact extends AppCompatActivity {
         phone = (TextView) findViewById(R.id.editTextPhone);
         email = (TextView) findViewById(R.id.editTextStreet);
         street = (TextView) findViewById(R.id.editTextEmail);
-        place = (TextView) findViewById(R.id.editTextCity);
+        place = (Spinner) findViewById(R.id.editTextCity);
 
         mydb = new DBHelper(this);
+        loadSpinnerData();
 
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
@@ -75,9 +88,7 @@ public class DisplayContact extends AppCompatActivity {
                 street.setFocusable(false);
                 street.setClickable(false);
 
-                place.setText((CharSequence)plac);
-                place.setFocusable(false);
-                place.setClickable(false);
+                place.setSelection(3); // TODO CHANGE
             }
         }
     }
@@ -159,10 +170,11 @@ public class DisplayContact extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras !=null) {
             int Value = extras.getInt("id");
+            Log.i("tag: ", place.getSelectedItem().toString());
             if(Value>0){
                 if(mydb.updateContact(id_To_Update,name.getText().toString(),
                         phone.getText().toString(), email.getText().toString(),
-                        street.getText().toString(), place.getText().toString())){
+                        street.getText().toString(), place.getSelectedItem().toString())){
                     Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
@@ -172,7 +184,7 @@ public class DisplayContact extends AppCompatActivity {
             } else{
                 if(mydb.insertContact(name.getText().toString(), phone.getText().toString(),
                         email.getText().toString(), street.getText().toString(),
-                        place.getText().toString())){
+                        place.getSelectedItem().toString())){
                     Toast.makeText(getApplicationContext(), "done",
                             Toast.LENGTH_SHORT).show();
                 } else{
