@@ -15,6 +15,8 @@ import java.io.StringWriter;
 import java.net.ContentHandlerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.net.URLConnection;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
@@ -30,8 +32,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class FetchHttpRequest extends AsyncTask<String, Integer, Long> {
+public class UpdateDataAsync extends AsyncTask<String, Integer, Long> {
     public String adress = "http://10.0.2.2:3161/devices";
+
 
     private String XMLDocumentAsString(Document doc){
         //XML as string
@@ -57,9 +60,22 @@ public class FetchHttpRequest extends AsyncTask<String, Integer, Long> {
     }
 
     protected Long doInBackground(String... urls) {
-        int count = urls.length;
         long totalSize = 0;
-        for (int i = 0; i < count; i++) {
+        boolean exitLoop = false;
+        while (!exitLoop){
+            RFIDManager manager = RFIDManager.getInstance();
+            manager.readDevices();
+            List<String> listDevices = manager.getConnectedDevices();
+            Log.i("DATA", listDevices.toString());
+            try {
+                TimeUnit.SECONDS.sleep(3);
+            } catch (InterruptedException e) {
+                exitLoop = true;
+                e.printStackTrace();
+            }
+        }
+        return totalSize;
+        /*for (int i = 0; i < count; i++) {
             try {
                 URL url = new URL(urls[0]);
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -68,19 +84,19 @@ public class FetchHttpRequest extends AsyncTask<String, Integer, Long> {
 
                 Log.i("XML full", XMLDocumentAsString(doc));
                 //Log.i("XML DATA: ", doc.getElementsByTagName("from").item(0).getTextContent());
-                //Log.i("FetchHttpRequest", "HOLA HTTP");
+                //Log.i("UpdateDataAsync", "HOLA HTTP");
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-                /*
-                totalSize += Downloader.downloadFile(urls[i]);
-                publishProgress((int) ((i / (float) count) * 100));
+
+                //totalSize += Downloader.downloadFile(urls[i]);
+                //publishProgress((int) ((i / (float) count) * 100));
                 // Escape early if cancel() is called
-                if (isCancelled()) break;*/
+                //if (isCancelled()) break;
 
         }
-        return totalSize;
+        return totalSize;*/
     }
 
     protected void onProgressUpdate(Integer... progress) {
@@ -88,7 +104,7 @@ public class FetchHttpRequest extends AsyncTask<String, Integer, Long> {
     }
 
     protected void onPostExecute(Long result) {
-        Log.i("FetchHttpRequest", "ADIOS HTTP");
+        Log.i("UpdateDataAsync", "ADIOS HTTP");
         //showDialog("Downloaded " + result + " bytes");
     }
 }

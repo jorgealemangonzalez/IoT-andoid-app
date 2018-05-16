@@ -20,6 +20,7 @@ package="com.jorge.arnau.iot" >
     </activity>
 
     <activity android:name=".DisplayContact"/>
+    <activity android:name=".DisplayDevices"/>
 
 </application>
 </manifest>

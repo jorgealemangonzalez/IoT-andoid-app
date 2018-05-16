@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mydb = new DBHelper(this);
+        //mydb.resetDB();
         ArrayList array_list = mydb.getAllCotacts();
         ArrayList cities = mydb.getCititesData();
         Log.i("CITIES:", "all cities--" +cities);
@@ -71,10 +72,12 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(intent);
                 return true;
-            case R.id.HttpRequest:
-                Log.i("Options: ", "Click on httpRequest");
-                FetchHttpRequest req = new FetchHttpRequest();
-                req.execute(req.adress);
+            case R.id.InitService:
+                UpdateDataAsync devicesData = new UpdateDataAsync();
+                devicesData.execute();
+                Intent devicesView = new Intent(getApplicationContext(),DisplayDevices.class);
+                startActivity(devicesView);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
