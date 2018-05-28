@@ -32,7 +32,7 @@
             android:layout_margin="1dp"
             android:background="#FFFFFF"
             android:gravity="center"
-            android:text="@String"
+            android:text="@string/time"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textStyle="bold"
             tools:text="Time" />
