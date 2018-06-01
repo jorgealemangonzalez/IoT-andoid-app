@@ -21,7 +21,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class UpdateDataAsync extends AsyncTask<String, Integer, Long> {
+public class RFIDcontroller extends AsyncTask<String, Integer, Long> {
     public String adress = "http://10.0.2.2:3161/devices";
     public HashMap<String,LocalDateTime> connected_devices = new HashMap<>();
 
@@ -72,7 +72,7 @@ public class UpdateDataAsync extends AsyncTask<String, Integer, Long> {
     }
 
     protected void onPostExecute(Long result) {
-        Log.i("UpdateDataAsync", "ADIOS HTTP");
+        Log.i("RFIDcontroller", "ADIOS HTTP");
         //showDialog("Downloaded " + result + " bytes");
     }
 }

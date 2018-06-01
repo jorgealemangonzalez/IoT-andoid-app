@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mydb = new DBHelper(this);
-        mydb.resetDB();
+        //mydb.resetDB();
         ArrayList array_list = mydb.getAllCotacts();
         ArrayList cities = mydb.getCititesData();
         Log.i("CITIES:", "all cities--" +cities);
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.InitService:
-                UpdateDataAsync devicesData = new UpdateDataAsync();
+                RFIDcontroller devicesData = new RFIDcontroller();
                 devicesData.execute();
                 Intent devicesView = new Intent(getApplicationContext(),DisplayDevices.class);
                 startActivity(devicesView);
