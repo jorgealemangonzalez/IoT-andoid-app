@@ -15,6 +15,9 @@ import java.io.StringWriter;
 import java.net.ContentHandlerFactory;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.net.URLConnection;
@@ -34,6 +37,7 @@ import javax.xml.transform.stream.StreamResult;
 
 public class UpdateDataAsync extends AsyncTask<String, Integer, Long> {
     public String adress = "http://10.0.2.2:3161/devices";
+    public HashMap<String,LocalDateTime> connected_devices;
 
 
     private String XMLDocumentAsString(Document doc){
@@ -65,8 +69,16 @@ public class UpdateDataAsync extends AsyncTask<String, Integer, Long> {
         while (!exitLoop){
             RFIDManager manager = RFIDManager.getInstance();
             manager.readDevices();
-            List<String> listDevices = manager.getConnectedDevices();
+            HashSet<String> listDevices = manager.getConnectedDevices();
             Log.i("DATA", listDevices.toString());
+
+            for(String device : listDevices){
+                if(connected_devices.get(device) != null){
+                    //todo
+                }
+            }
+
+            //Don't use all CPU
             try {
                 TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {

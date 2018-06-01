@@ -12,6 +12,7 @@ import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -78,9 +79,9 @@ public class RFIDManager {
         }
     }
 
-    public List<String> getConnectedDevices(){
+    public HashSet<String> getConnectedDevices(){
         NodeList devices =  this.devicesDoc.getElementsByTagName("item");
-        List<String> resutIds = new ArrayList<>();
+        HashSet<String> resutIds = new HashSet<>();
         for( int i = 0 ; i < devices.getLength(); ++i){
             Element device = (Element) devices.item(i);
             String id = ((Element)device.getElementsByTagName("epc").item(0)).getTextContent();

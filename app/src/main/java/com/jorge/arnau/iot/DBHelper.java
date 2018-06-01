@@ -40,12 +40,20 @@ class DBHelper extends SQLiteOpenHelper {
                 "create table contacts " +
                         "(id integer primary key, name text,phone text,email text, street text,place integer, FOREIGN KEY(place) REFERENCES cities(id))"
         );
+
+        //Init courses table
+        db.execSQL(
+                "create table courses" +
+                        "(id integer primary key AUTOINCREMENT, RFID text, start_date datetime, end_date datetime)"
+        );
+
     }
 
     public void resetDB(){
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DROP TABLE IF EXISTS contacts");
         db.execSQL("DROP TABLE IF EXISTS cities");
+        db.execSQL("DROP TABLE IF EXISTS courses");
         this.onCreate(db);
     }
 

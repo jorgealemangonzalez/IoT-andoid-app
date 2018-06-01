@@ -28,7 +28,7 @@ public class DisplayDevices extends AppCompatActivity {
         setContentView(R.layout.activity_display_devices);
 
         Bundle extras = getIntent().getExtras();
-        Log.i("ADD", extras.toString());
+        //Log.i("ADD", extras.toString());
         if(extras !=null) {
             int Value = extras.getInt("id");
 
