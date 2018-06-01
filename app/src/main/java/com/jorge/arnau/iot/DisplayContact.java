@@ -64,7 +64,7 @@ public class DisplayContact extends AppCompatActivity {
                 String phon = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_PHONE));
                 String emai = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_EMAIL));
                 String stree = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_STREET));
-                String plac = rs.getString(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_CITY));
+                Integer placeId = rs.getInt(rs.getColumnIndex(DBHelper.CONTACTS_COLUMN_CITY));
 
                 if (!rs.isClosed())  {
                     rs.close();
@@ -88,7 +88,7 @@ public class DisplayContact extends AppCompatActivity {
                 street.setFocusable(false);
                 street.setClickable(false);
 
-                place.setSelection(3); // TODO CHANGE
+                place.setSelection(placeId-1);
             }
         }
     }

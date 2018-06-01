@@ -58,8 +58,19 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
     Integer getCityIdByName(SQLiteDatabase db, String name){
-        Cursor res = db.rawQuery("SELECT id FROM cities WHERE name ="+name, null);
-        return res.getInt(res.getColumnIndex(CONTACTS_COLUMN_ID));
+        Cursor rs = db.rawQuery("SELECT id FROM cities WHERE name ='"+name+"'", null);
+        rs.moveToFirst();
+        Integer result = rs.getInt(rs.getColumnIndex(CONTACTS_COLUMN_ID));
+
+        if (!rs.isClosed())  {
+            rs.close();
+        }
+        return result;
+    }
+
+    Integer getCityIdByName(String name){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return this.getCityIdByName(db, name);
     }
 
     public boolean insertContact (String name, String phone, String email, String street,String place) {
@@ -69,7 +80,7 @@ class DBHelper extends SQLiteOpenHelper {
         contentValues.put("phone", phone);
         contentValues.put("email", email);
         contentValues.put("street", street);
-        contentValues.put("place", getCityIdByName(db,place));
+        contentValues.put("place", getCityIdByName(db, place));
         db.insert("contacts", null, contentValues);
         return true;
     }
@@ -108,7 +119,7 @@ class DBHelper extends SQLiteOpenHelper {
         contentValues.put("phone", phone);
         contentValues.put("email", email);
         contentValues.put("street", street);
-        contentValues.put("place", getCityIdByName(db,place));
+        contentValues.put("place", getCityIdByName(db, place));
         db.update("contacts", contentValues, "id = ? ", new String[] { Integer.toString(id) } );
         return true;
     }
