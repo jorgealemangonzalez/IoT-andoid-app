@@ -34,29 +34,6 @@ public class RFIDManager {
 
     }
 
-    private String XMLDocumentAsString(Document doc){
-        //XML as string
-
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer transformer = null;
-        try {
-            transformer = tf.newTransformer();
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        }
-        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-        StringWriter writer = new StringWriter();
-        try {
-            transformer.transform(new DOMSource(doc), new StreamResult(writer));
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
-        String output = writer.getBuffer().toString(); //.replaceAll("\n|\r", "")
-
-        // end XML as string
-        return output;
-    }
-
     public static RFIDManager getInstance(){
         if(RFIDManager.theInstance == null) {
             try {

@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -149,6 +150,42 @@ class DBHelper extends SQLiteOpenHelper {
 
         while(res.isAfterLast() == false){
             array_list.add(res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME)));
+            res.moveToNext();
+        }
+        return array_list;
+    }
+
+    public void insertDevice(String RFID, LocalDateTime dateTime){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("RFID", RFID);
+        contentValues.put("start_date", dateTime.toString());
+        db.insert("courses", null, contentValues);
+    }
+
+    public void updateDeviceEndTime(String RFID, LocalDateTime dateTime){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("end_date", dateTime.toString());
+        db.update("courses", contentValues, "RFID = ? and end_date is null", new String[] { RFID } );
+
+    }
+
+    public ArrayList<Course> getAllCourses() {
+        ArrayList<Course> array_list = new ArrayList<>();
+
+        //hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from courses", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            Course course = new Course(
+                    res.getString(res.getColumnIndex("id")),
+                    res.getString(res.getColumnIndex("RFID")),
+                    res.getString(res.getColumnIndex("start_date")),
+                    res.getString(res.getColumnIndex("end_date")));
+            array_list.add(course);
             res.moveToNext();
         }
         return array_list;

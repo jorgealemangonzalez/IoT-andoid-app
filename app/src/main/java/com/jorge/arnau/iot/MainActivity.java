@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "MESSAGE";
     private ListView obj;
-    DBHelper mydb;
+    static DBHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mydb = new DBHelper(this);
-        //mydb.resetDB();
+        mydb.resetDB();
         ArrayList array_list = mydb.getAllCotacts();
         ArrayList cities = mydb.getCititesData();
         Log.i("CITIES:", "all cities--" +cities);
