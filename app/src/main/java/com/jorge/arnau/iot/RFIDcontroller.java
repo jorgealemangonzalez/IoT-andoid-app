@@ -3,7 +3,6 @@ package com.jorge.arnau.iot;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.StringWriter;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
@@ -11,21 +10,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.w3c.dom.Document;
-
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-public class RFIDcontroller extends AsyncTask<String, Integer, Long> {
+public class RFIDcontroller extends AsyncTask<String, Integer, Boolean> {
     public String adress = "http://10.0.2.2:3161/devices";
     public HashMap<String,LocalDateTime> connected_devices = new HashMap<>();
+    public List<Course> endedCourses;
+    public List<Course> notEndedCourses;
 
-    protected Long doInBackground(String... urls) {
+    protected Boolean doInBackground(String... urls) {
+        endedCourses = MainActivity.mydb.getEndedCourses();
+        notEndedCourses = MainActivity.mydb.getNotEndedCourses();
+        for(Course c : notEndedCourses){
+            connected_devices.put(c.RFID, c.startDate);         //restore last state
+        }
 
         long totalSize = 0;
         boolean exitLoop = false;
@@ -54,8 +50,11 @@ public class RFIDcontroller extends AsyncTask<String, Integer, Long> {
                 }
             }
 
-            List<Course> courses = MainActivity.mydb.getAllCourses();
+            endedCourses = MainActivity.mydb.getEndedCourses();         //Upload every 3 seconds because another device could have modified the database (if it is a remote DB)
+            notEndedCourses = MainActivity.mydb.getNotEndedCourses();
 
+            CoursesStatus.setEndedCourses(endedCourses);
+            CoursesStatus.setNotEndedCourses(notEndedCourses);
             //Don't use all CPU
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -64,15 +63,14 @@ public class RFIDcontroller extends AsyncTask<String, Integer, Long> {
                 e.printStackTrace();
             }
         }
-        return totalSize;
+        return true;
     }
 
     protected void onProgressUpdate(Integer... progress) {
         //setProgressPercent(progress[0]);
     }
 
-    protected void onPostExecute(Long result) {
-        Log.i("RFIDcontroller", "ADIOS HTTP");
-        //showDialog("Downloaded " + result + " bytes");
+    protected void onPostExecute(Boolean result) {
+        Log.i("RFIDcontroller: ", "The processing of RFIDs has been stopped");
     }
 }

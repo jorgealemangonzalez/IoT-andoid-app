@@ -190,4 +190,42 @@ class DBHelper extends SQLiteOpenHelper {
         }
         return array_list;
     }
+    public ArrayList<Course> getEndedCourses() {
+        ArrayList<Course> array_list = new ArrayList<>();
+
+        //hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from courses where end_date is not null", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            Course course = new Course(
+                    res.getString(res.getColumnIndex("id")),
+                    res.getString(res.getColumnIndex("RFID")),
+                    res.getString(res.getColumnIndex("start_date")),
+                    res.getString(res.getColumnIndex("end_date")));
+            array_list.add(course);
+            res.moveToNext();
+        }
+        return array_list;
+    }
+    public ArrayList<Course> getNotEndedCourses() {
+        ArrayList<Course> array_list = new ArrayList<>();
+
+        //hp = new HashMap();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res =  db.rawQuery( "select * from courses where end_date is null", null );
+        res.moveToFirst();
+
+        while(res.isAfterLast() == false){
+            Course course = new Course(
+                    res.getString(res.getColumnIndex("id")),
+                    res.getString(res.getColumnIndex("RFID")),
+                    res.getString(res.getColumnIndex("start_date")),
+                    res.getString(res.getColumnIndex("end_date")));
+            array_list.add(course);
+            res.moveToNext();
+        }
+        return array_list;
+    }
 }
