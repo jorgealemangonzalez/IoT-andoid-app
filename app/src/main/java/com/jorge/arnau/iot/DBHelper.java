@@ -63,6 +63,7 @@ class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL("DROP TABLE IF EXISTS contacts");
         db.execSQL("DROP TABLE IF EXISTS cities");
+        db.execSQL("DROP TABLE IF EXISTS courses");
         onCreate(db);
     }
 
