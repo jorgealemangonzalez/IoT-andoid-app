@@ -1,6 +1,5 @@
 package com.jorge.arnau.iot;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -23,12 +22,7 @@ public class CoursesStatus {
                 numberOfCourses.put(c.RFID, 1);
             } else {
                 averageEatingTime.put(c.RFID, averageEatingTime.get(c.RFID) + intervaltime);
-                try{
-                    numberOfCourses.put(c.RFID, numberOfCourses.get(c.RFID) + 1);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-
+                numberOfCourses.put(c.RFID, numberOfCourses.get(c.RFID) + 1);
             }
         }
 
