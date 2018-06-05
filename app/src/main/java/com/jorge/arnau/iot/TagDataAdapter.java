@@ -17,8 +17,10 @@ public class TagDataAdapter extends BaseAdapter {
     private Context recordContext;
     private List<TagData> recordList;
     private static class RecordViewHolder {
-        public TextView tagIdView;
-        public TextView timeView;
+        //public TextView idView;
+        public TextView rfidView;
+        public TextView startDateView;
+        public TextView endDateView;
     }
 
     public TagDataAdapter(Context context, List<TagData> records) {
@@ -28,6 +30,18 @@ public class TagDataAdapter extends BaseAdapter {
 
     public void add(TagData record) {
         recordList.add(record);
+        notifyDataSetChanged();
+    }
+
+    public void clear(){
+        recordList.clear();
+    }
+
+    public void addAll(List<Course> courses) {
+        recordList.clear();
+        for(Course c: courses){
+            recordList.add(c.courseToTagData());
+        }
         notifyDataSetChanged();
     }
 
@@ -54,8 +68,10 @@ public class TagDataAdapter extends BaseAdapter {
             view = recordInflater.inflate(R.layout.record, null);
 
             holder = new RecordViewHolder();
-            holder.tagIdView = (TextView) view.findViewById(R.id.record_tag_id);
-            holder.timeView = (TextView) view.findViewById(R.id.record_time);
+            //holder.idView = (TextView) view.findViewById(R.id.record_id);
+            holder.rfidView = (TextView) view.findViewById(R.id.record_rfid);
+            holder.startDateView = (TextView) view.findViewById(R.id.record_startDate);
+            holder.endDateView = (TextView) view.findViewById(R.id.record_endDate);
             view.setTag(holder);
 
         }else {
@@ -63,8 +79,10 @@ public class TagDataAdapter extends BaseAdapter {
         }
 
         TagData record = (TagData) getItem(i);
-        holder.tagIdView.setText(record.tag_id);
-        holder.timeView.setText(record.time);
+        //holder.idView.setText(record.id);
+        holder.rfidView.setText(record.RFID);
+        holder.startDateView.setText(record.startDate);
+        holder.endDateView.setText(record.endDate);
         return view;
     }
 }

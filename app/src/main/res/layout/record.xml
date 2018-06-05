@@ -2,20 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/record_tag_id"
+    <!--<TextView
+        android:id="@+id/record_id"
         android:fontFamily="serif"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:textColor="#000"
-        android:text="Name"/>
+        android:text="Id"/>-->
     <TextView
-        android:id="@+id/record_time"
-        android:textColor="#000"
-        android:fontFamily="serif"
+        android:id="@+id/record_rfid"
+        android:layout_width="213dp"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         android:layout_weight="1"
-        android:text="Age"/>
+        android:fontFamily="serif"
+        android:text="rfid"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/record_startDate"
+        android:layout_width="41dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="serif"
+        android:text="start"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/record_endDate"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="serif"
+        android:text="end"
+        android:textColor="#000" />
+
 </LinearLayout>

@@ -19,38 +19,38 @@
             android:id="@+id/table_row1"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tag_id"
-                android:fontFamily="serif"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:textColor="#000"
-                android:text="TagID"/>
-            <TextView
-                android:id="@+id/time"
-                android:textColor="#000"
-                android:fontFamily="serif"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="Time"/>
             <!--<TextView
-                android:textColor="#000"
-                android:id="@+id/position"
+                android:id="@+id/_id"
                 android:fontFamily="serif"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="Position"/>
+                android:textColor="#000"
+                android:text="TagID"/>-->
+            <TextView
+                android:id="@+id/_rfid"
+                android:layout_width="167dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="serif"
+                android:text="RFID"
+                android:textColor="#000" />
             <TextView
                 android:textColor="#000"
-                android:id="@+id/address"
+                android:id="@+id/_startDate"
                 android:fontFamily="serif"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:text="location"/>-->
+                android:text="Start"/>
+            <TextView
+                android:textColor="#000"
+                android:id="@+id/_endDate"
+                android:fontFamily="serif"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:text="End"/>
 
         </TableRow>
         <View

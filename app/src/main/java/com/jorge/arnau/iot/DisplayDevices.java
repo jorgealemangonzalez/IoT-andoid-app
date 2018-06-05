@@ -24,9 +24,9 @@ public class DisplayDevices extends AppCompatActivity {
         test.setFocusable(false);
         test.setClickable(false);*/
 
-        tagDataAdapter= new TagDataAdapter(this, new ArrayList<TagData>());
-        final ListView recordsView = (ListView) findViewById(R.id.records_view);
-        recordsView.setAdapter(tagDataAdapter);
+        //tagDataAdapter= new TagDataAdapter(this, new ArrayList<TagData>());
+        //final ListView recordsView = (ListView) findViewById(R.id.records_view);
+        //recordsView.setAdapter(tagDataAdapter);
     }
 
 

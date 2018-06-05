@@ -2,6 +2,8 @@ package com.jorge.arnau.iot;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -16,13 +18,18 @@ public class RFIDcontroller extends AsyncTask<String, Integer, Boolean> {
     public List<Course> endedCourses;
     public List<Course> notEndedCourses;
 
+    public OnNewDataListener mOnNewDataListener;
+
+    public void setOnNewData(OnNewDataListener eventListener) {
+        mOnNewDataListener = eventListener;
+    }
+
     protected Boolean doInBackground(String... urls) {
         endedCourses = MainActivity.mydb.getEndedCourses();
         notEndedCourses = MainActivity.mydb.getNotEndedCourses();
         for(Course c : notEndedCourses){
             connected_devices.put(c.RFID, c.startDate);         //restore last state
         }
-
         long totalSize = 0;
         boolean exitLoop = false;
         while (!exitLoop){
@@ -55,6 +62,8 @@ public class RFIDcontroller extends AsyncTask<String, Integer, Boolean> {
 
             CoursesStatus.setEndedCourses(endedCourses);
             CoursesStatus.setNotEndedCourses(notEndedCourses);
+
+            mOnNewDataListener.onNewData(notEndedCourses);
             //Don't use all CPU
             try {
                 TimeUnit.SECONDS.sleep(3);
@@ -62,8 +71,12 @@ public class RFIDcontroller extends AsyncTask<String, Integer, Boolean> {
                 exitLoop = true;
                 e.printStackTrace();
             }
+
         }
         return true;
+    }
+
+    private void runOnUiThread(Runnable runnable) {
     }
 
     protected void onProgressUpdate(Integer... progress) {
