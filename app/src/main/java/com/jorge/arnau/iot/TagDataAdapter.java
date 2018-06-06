@@ -90,9 +90,9 @@ public class TagDataAdapter extends BaseAdapter {
             if (remainingTime > 0)
                 progress = (int) (100 * (1 - remainingTime / averageEatingTime));
 
-//            Log.i("TEST-" + record.RFID + "-averageEatingTime", "" + averageEatingTime);
-//            Log.i("TEST-" + record.RFID + "-remainingTime", "" + remainingTime);
-//            Log.i("TEST-" + record.RFID + "-progress", "" + progress);
+//            Log.i("TEST-" + record.RFID, "averageEatingTime" + averageEatingTime);
+//            Log.i("TEST-" + record.RFID, "remainingTime" + remainingTime);
+//            Log.i("TEST-" + record.RFID, "progress" + progress);
             holder.progressBarView.setProgress(progress);
         }
 
