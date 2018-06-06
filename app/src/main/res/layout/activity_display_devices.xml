@@ -35,22 +35,15 @@
                 android:fontFamily="serif"
                 android:text="RFID"
                 android:textColor="#000" />
+
             <TextView
-                android:textColor="#000"
-                android:id="@+id/_startDate"
-                android:fontFamily="serif"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_weight="1"
-                android:text="Start"/>
-            <TextView
-                android:textColor="#000"
                 android:id="@+id/_endDate"
-                android:fontFamily="serif"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="End"/>
+                android:fontFamily="serif"
+                android:text="Progress"
+                android:textColor="#000" />
 
         </TableRow>
         <View

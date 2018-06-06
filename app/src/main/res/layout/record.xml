@@ -19,22 +19,11 @@
         android:text="rfid"
         android:textColor="#000" />
 
-    <TextView
-        android:id="@+id/record_startDate"
-        android:layout_width="41dp"
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="serif"
-        android:text="start"
-        android:textColor="#000" />
-
-    <TextView
-        android:id="@+id/record_endDate"
-        android:layout_width="56dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="serif"
-        android:text="end"
-        android:textColor="#000" />
+        android:layout_weight="1" />
 
 </LinearLayout>

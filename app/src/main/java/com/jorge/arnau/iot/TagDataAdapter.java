@@ -3,10 +3,12 @@ package com.jorge.arnau.iot;
 import android.app.Activity;
 import android.content.Context;
 import android.nfc.Tag;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,8 +21,7 @@ public class TagDataAdapter extends BaseAdapter {
     private static class RecordViewHolder {
         //public TextView idView;
         public TextView rfidView;
-        public TextView startDateView;
-        public TextView endDateView;
+        public ProgressBar progressBarView;
     }
 
     public TagDataAdapter(Context context, List<TagData> records) {
@@ -70,8 +71,7 @@ public class TagDataAdapter extends BaseAdapter {
             holder = new RecordViewHolder();
             //holder.idView = (TextView) view.findViewById(R.id.record_id);
             holder.rfidView = (TextView) view.findViewById(R.id.record_rfid);
-            holder.startDateView = (TextView) view.findViewById(R.id.record_startDate);
-            holder.endDateView = (TextView) view.findViewById(R.id.record_endDate);
+            holder.progressBarView = (ProgressBar) view.findViewById(R.id.progress_bar);
             view.setTag(holder);
 
         }else {
@@ -81,8 +81,21 @@ public class TagDataAdapter extends BaseAdapter {
         TagData record = (TagData) getItem(i);
         //holder.idView.setText(record.id);
         holder.rfidView.setText(record.RFID);
-        holder.startDateView.setText(record.startDate);
-        holder.endDateView.setText(record.endDate);
+
+        if (record.RFID != null) {
+            float averageEatingTime = CoursesStatus.averageEatingTime.get(record.RFID);
+            float remainingTime = CoursesStatus.remainingTime.get(record.RFID);
+
+            int progress = 100;
+            if (remainingTime > 0)
+                progress = (int) (100 * (1 - remainingTime / averageEatingTime));
+
+//            Log.i("TEST-" + record.RFID + "-averageEatingTime", "" + averageEatingTime);
+//            Log.i("TEST-" + record.RFID + "-remainingTime", "" + remainingTime);
+//            Log.i("TEST-" + record.RFID + "-progress", "" + progress);
+            holder.progressBarView.setProgress(progress);
+        }
+
         return view;
     }
 }
