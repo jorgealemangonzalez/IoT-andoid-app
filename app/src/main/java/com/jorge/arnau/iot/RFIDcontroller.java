@@ -27,6 +27,9 @@ public class RFIDcontroller extends AsyncTask<String, Integer, Boolean> {
     protected Boolean doInBackground(String... urls) {
         endedCourses = MainActivity.mydb.getEndedCourses();
         notEndedCourses = MainActivity.mydb.getNotEndedCourses();
+        CoursesStatus.setEndedCourses(endedCourses);
+        CoursesStatus.setNotEndedCourses(notEndedCourses);
+
         for(Course c : notEndedCourses){
             connected_devices.put(c.RFID, c.startDate);         //restore last state
         }
@@ -66,7 +69,7 @@ public class RFIDcontroller extends AsyncTask<String, Integer, Boolean> {
             mOnNewDataListener.onNewData(notEndedCourses);
             //Don't use all CPU
             try {
-                TimeUnit.SECONDS.sleep(3);
+                TimeUnit.MILLISECONDS.sleep(200);
             } catch (InterruptedException e) {
                 exitLoop = true;
                 e.printStackTrace();

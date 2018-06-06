@@ -9,8 +9,8 @@ public class CoursesStatus {
     private static List<Course> endedCourses;
     private static List<Course> notEndedCourses;
 
-    public static HashMap<String, Float> averageEatingTime;         //RFID -> AVERAGE TIME (seconds)
-    public static HashMap<String, Float> remainingTime;             //RFID -> average time until finish  //TODO JUST ONE OF EACH RFID ?
+    public static HashMap<String, Float> averageEatingTime = new HashMap<>();         //RFID -> AVERAGE TIME (seconds)
+    public static HashMap<String, Float> remainingTime = new HashMap<>();             //RFID -> average time until finish  //TODO JUST ONE OF EACH RFID ?
 
     private static void setAverageEatingTime() {
         HashMap<String, Integer> numberOfCourses = new HashMap<>();

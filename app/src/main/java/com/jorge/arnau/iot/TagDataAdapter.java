@@ -2,6 +2,8 @@ package com.jorge.arnau.iot;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.nfc.Tag;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -83,17 +85,25 @@ public class TagDataAdapter extends BaseAdapter {
         holder.rfidView.setText(record.RFID);
 
         if (record.RFID != null) {
-            float averageEatingTime = CoursesStatus.averageEatingTime.get(record.RFID);
-            float remainingTime = CoursesStatus.remainingTime.get(record.RFID);
+            Float averageEatingTime = CoursesStatus.averageEatingTime.get(record.RFID);
+            Float remainingTime = CoursesStatus.remainingTime.get(record.RFID);
 
-            int progress = 100;
-            if (remainingTime > 0)
-                progress = (int) (100 * (1 - remainingTime / averageEatingTime));
+            if(averageEatingTime == null || remainingTime == null){
+                holder.progressBarView.setProgress(100);
+                holder.progressBarView.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
 
-//            Log.i("TEST-" + record.RFID, "averageEatingTime" + averageEatingTime);
-//            Log.i("TEST-" + record.RFID, "remainingTime" + remainingTime);
-//            Log.i("TEST-" + record.RFID, "progress" + progress);
-            holder.progressBarView.setProgress(progress);
+            }else{
+
+                int progress = 100;
+                if (remainingTime > 0)
+                    progress = (int) (100 * (1 - remainingTime / averageEatingTime));
+
+    //            Log.i("TEST-" + record.RFID, "averageEatingTime" + averageEatingTime);
+    //            Log.i("TEST-" + record.RFID, "remainingTime" + remainingTime);
+    //            Log.i("TEST-" + record.RFID, "progress" + progress);
+                holder.progressBarView.setProgress(progress);
+                holder.progressBarView.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+            }
         }
 
         return view;

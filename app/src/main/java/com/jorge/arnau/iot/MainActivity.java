@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mydb = new DBHelper(this);
-        //mydb.resetDB();
+        mydb.resetDB();
         ArrayList array_list = mydb.getAllCotacts();
         ArrayList cities = mydb.getCititesData();
         Log.i("CITIES:", "all cities--" +cities);
@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                                     //Log.i( "LE", String.valueOf(notEndedCourses.size()));
                                     //tagDataAdapter.addAll(notEndedCourses);
                                     tagDataAdapter.clear();
+                                    recordsView.setSelection(0);
                                     for(Course c: notEndedCourses) {
                                         TagData record = c.courseToTagData();
                                         tagDataAdapter.add(record);
