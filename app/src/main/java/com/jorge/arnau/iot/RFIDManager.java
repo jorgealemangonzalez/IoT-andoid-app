@@ -15,8 +15,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class RFIDManager {
     private static RFIDManager theInstance = null;
-    private String urlConnexion = "http://192.168.2.152:3161";   //TODO PUEDE QUE HAYA QUE CAMBIARLO CON UN MOVIL REAL
-    private URL urlDevices = new URL(urlConnexion+"/devices/AdvanReader-m4-150/inventory");  //TODO simulator cambia en cada uno (obtener con llamada inicial /devices ), iniciar device con /devices/{dev_id}/start
+    private String urlConnexion = "http://10.80.138.189:3161";   //TODO PUEDE QUE HAYA QUE CAMBIARLO CON UN MOVIL REAL
+    private URL urlDevices = new URL(urlConnexion+"/devices/simulator/inventory");  //TODO simulator cambia en cada uno (obtener con llamada inicial /devices ), iniciar device con /devices/{dev_id}/start
     private Document devicesDoc = null;
 
     private RFIDManager() throws MalformedURLException {

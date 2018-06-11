@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class RFIDcontroller extends AsyncTask<String, Integer, Boolean> {
-    public String adress = "http://10.0.2.2:3161/devices";
     public HashMap<String,LocalDateTime> connected_devices = new HashMap<>();
     public List<Course> endedCourses;
     public List<Course> notEndedCourses;
